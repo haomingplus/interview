@@ -75,8 +75,10 @@ public class SecurityConfig {
                         // 公开接口
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/doc.html", "/webjars/**", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
-                        // GET请求的知识库和题库允许匿名访问
-                        .requestMatchers(HttpMethod.GET, "/knowledge/**", "/questions/**", "/community/posts/**").permitAll()
+                        // 支付回调接口(不需要认证)
+                        .requestMatchers("/payment/wechat/notify", "/payment/alipay/notify").permitAll()
+                        // GET请求的知识库、题库、VIP产品允许匿名访问
+                        .requestMatchers(HttpMethod.GET, "/knowledge/**", "/questions/**", "/community/posts/**", "/payment/products").permitAll()
                         // 管理员接口
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         // 其他请求需要认证

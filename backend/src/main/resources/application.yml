@@ -97,6 +97,25 @@ aliyun:
     sign-name: 面试宝典
     template-code: SMS_123456789
 
+# 支付配置
+payment:
+  wechat:
+    app-id: your-wechat-app-id
+    mch-id: your-wechat-mch-id
+    api-key: your-wechat-api-key
+    api-key-v3: your-wechat-api-key-v3
+    cert-path: /path/to/apiclient_cert.p12
+    notify-url: https://your-domain.com/api/payment/wechat/notify
+  alipay:
+    app-id: your-alipay-app-id
+    private-key: your-alipay-private-key
+    public-key: your-alipay-public-key
+    notify-url: https://your-domain.com/api/payment/alipay/notify
+    return-url: https://your-domain.com/payment/success
+    gateway-url: https://openapi.alipay.com/gateway.do
+    charset: UTF-8
+    sign-type: RSA2
+
 # 日志配置
 logging:
   level:

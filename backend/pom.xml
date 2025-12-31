@@ -26,6 +26,7 @@
         <mapstruct.version>1.5.5.Final</mapstruct.version>
         <aliyun-oss.version>3.17.2</aliyun-oss.version>
         <aliyun-sms.version>2.0.24</aliyun-sms.version>
+        <ijpay.version>2.9.6</ijpay.version>
     </properties>
 
     <dependencies>
@@ -124,6 +125,20 @@
             <groupId>com.aliyun</groupId>
             <artifactId>dysmsapi20170525</artifactId>
             <version>${aliyun-sms.version}</version>
+        </dependency>
+
+        <!-- IJPay - WeChat Pay -->
+        <dependency>
+            <groupId>com.github.javen205</groupId>
+            <artifactId>IJPay-WxPay</artifactId>
+            <version>${ijpay.version}</version>
+        </dependency>
+
+        <!-- IJPay - Alipay -->
+        <dependency>
+            <groupId>com.github.javen205</groupId>
+            <artifactId>IJPay-AliPay</artifactId>
+            <version>${ijpay.version}</version>
         </dependency>
 
         <!-- Apache Commons -->

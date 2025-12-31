@@ -8,8 +8,9 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { PageHeader } from "@/components/layout/page-header";
 import { KnowledgeCard } from "@/components/features/knowledge-card";
+import { KnowledgeEditorDialog } from "@/components/features/knowledge-editor-dialog";
 import { useMockKnowledge } from "@/hooks/use-mock-data";
-import { type KnowledgeCategory } from "@/types";
+import { type Knowledge, type KnowledgeCategory } from "@/types";
 
 const categories: { value: KnowledgeCategory | "all"; label: string }[] = [
   { value: "all", label: "全部" },
@@ -27,7 +28,15 @@ export default function KnowledgePage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<KnowledgeCategory | "all">("all");
   const [viewMode, setViewMode] = useState<"list" | "grid">("list");
+  const [editorOpen, setEditorOpen] = useState(false);
   const { data: knowledge, loading } = useMockKnowledge();
+
+  const handleSaveKnowledge = async (data: Partial<Knowledge>) => {
+    // TODO: Call API to save knowledge
+    console.log("Saving knowledge:", data);
+    // Simulating API call
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+  };
 
   const filteredKnowledge = knowledge.filter((item) => {
     const matchesSearch =
@@ -40,11 +49,17 @@ export default function KnowledgePage() {
   return (
     <div className="min-h-screen">
       <PageHeader title="知识库">
-        <Button className="rounded-full gap-2">
+        <Button className="rounded-full gap-2" onClick={() => setEditorOpen(true)}>
           <Plus className="h-4 w-4" />
           添加知识点
         </Button>
       </PageHeader>
+
+      <KnowledgeEditorDialog
+        open={editorOpen}
+        onOpenChange={setEditorOpen}
+        onSave={handleSaveKnowledge}
+      />
 
       {/* Search and Filters */}
       <div className="border-b border-border p-4 space-y-4">
@@ -148,7 +163,7 @@ export default function KnowledgePage() {
           <div className="flex flex-col items-center justify-center py-16 px-4">
             <h3 className="text-xl font-bold mb-2">还没有创建知识点</h3>
             <p className="text-muted-foreground mb-4">创建你自己的知识点，记录学习心得</p>
-            <Button>创建第一个知识点</Button>
+            <Button onClick={() => setEditorOpen(true)}>创建第一个知识点</Button>
           </div>
         </TabsContent>
       </Tabs>

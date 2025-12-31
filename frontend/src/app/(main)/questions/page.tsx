@@ -10,8 +10,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { PageHeader } from "@/components/layout/page-header";
 import { QuestionCard } from "@/components/features/question-card";
+import { QuestionEditorDialog } from "@/components/features/question-editor-dialog";
 import { useMockQuestions } from "@/hooks/use-mock-data";
-import { type KnowledgeCategory } from "@/types";
+import { type Question, type KnowledgeCategory } from "@/types";
 
 const categories: { value: KnowledgeCategory | "all"; label: string }[] = [
   { value: "all", label: "全部" },
@@ -28,7 +29,15 @@ export default function QuestionsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<KnowledgeCategory | "all">("all");
   const [selectedDifficulty, setSelectedDifficulty] = useState<"all" | "easy" | "medium" | "hard">("all");
+  const [editorOpen, setEditorOpen] = useState(false);
   const { data: questions, loading } = useMockQuestions();
+
+  const handleSaveQuestion = async (data: Partial<Question>) => {
+    // TODO: Call API to save question
+    console.log("Saving question:", data);
+    // Simulating API call
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+  };
 
   const filteredQuestions = questions.filter((item) => {
     const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase());
@@ -54,12 +63,18 @@ export default function QuestionsPage() {
             <Shuffle className="h-4 w-4" />
             随机刷题
           </Button>
-          <Button className="rounded-full gap-2">
+          <Button className="rounded-full gap-2" onClick={() => setEditorOpen(true)}>
             <Plus className="h-4 w-4" />
             添加题目
           </Button>
         </div>
       </PageHeader>
+
+      <QuestionEditorDialog
+        open={editorOpen}
+        onOpenChange={setEditorOpen}
+        onSave={handleSaveQuestion}
+      />
 
       <div className="p-4 space-y-4">
         {/* Stats Overview */}
