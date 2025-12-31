@@ -1,0 +1,104 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: interview-backend
+  profiles:
+    active: dev
+
+  # 数据源配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/interview?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+
+  # Redis配置
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password:
+      database: 0
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: -1ms
+
+  # Jackson配置
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+    serialization:
+      write-dates-as-timestamps: false
+
+  # 文件上传配置
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 20MB
+
+# MyBatis-Plus配置
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
+  type-aliases-package: com.interview.entity
+  global-config:
+    db-config:
+      id-type: ASSIGN_ID
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# JWT配置
+jwt:
+  secret: interview-knowledge-system-jwt-secret-key-2024-very-long-and-secure
+  expiration: 86400000 # 24小时
+  refresh-expiration: 604800000 # 7天
+  header: Authorization
+  prefix: "Bearer "
+
+# Knife4j配置
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.interview.controller
+
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+    swagger-model-name: 实体类
+
+# 阿里云配置
+aliyun:
+  oss:
+    endpoint: oss-cn-hangzhou.aliyuncs.com
+    access-key-id: your-access-key-id
+    access-key-secret: your-access-key-secret
+    bucket-name: your-bucket-name
+  sms:
+    access-key-id: your-access-key-id
+    access-key-secret: your-access-key-secret
+    sign-name: 面试宝典
+    template-code: SMS_123456789
+
+# 日志配置
+logging:
+  level:
+    com.interview: debug
+    org.springframework.security: debug
